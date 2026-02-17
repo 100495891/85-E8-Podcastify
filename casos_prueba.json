@@ -1,0 +1,159 @@
+[
+  {
+    "id": "TC-RF-01",
+    "titulo": "Persistencia de campos CSV",
+    "configuracion_entrada": {
+      "csv_line": "1,Mozilla/5.0,Windows,Chrome,Desktop,GET,uri_1,Ep1,Pod1,Tech,200,5000",
+      "expected_fields": 12
+    },
+    "resultado_esperado": {
+      "status": "success",
+      "db_insert": true
+    }
+  },
+  {
+    "id": "TC-RF-02",
+    "titulo": "Validación de Método HTTP",
+    "configuracion_entrada": {
+      "method": "POST"
+    },
+    "resultado_esperado": {
+      "valido": false,
+      "observacion": "Bad method"
+    }
+  },
+  {
+    "id": "TC-RF-03",
+    "titulo": "Validación de Status HTTP Erróneo",
+    "configuracion_entrada": {
+      "status": 404
+    },
+    "resultado_esperado": {
+      "valido": false,
+      "observacion": "Bad status"
+    }
+  },
+  {
+    "id": "TC-RF-04",
+    "titulo": "Detección de Bot en User Agent",
+    "configuracion_entrada": {
+      "user_agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+    },
+    "resultado_esperado": {
+      "valido": false,
+      "observacion": "Bot detected"
+    }
+  },
+  {
+    "id": "TC-RF-05",
+    "titulo": "Validación de Extensión de Recurso",
+    "configuracion_entrada": {
+      "uri": "http://podcastify.com/download/audio.wav"
+    },
+    "resultado_esperado": {
+      "valido": false,
+      "observacion": "Bad format resource"
+    }
+  },
+  {
+    "id": "TC-RF-06",
+    "titulo": "Generación de Observación por Error",
+    "configuracion_entrada": {
+      "error_type": "Bad method",
+      "uri": "/episode/123"
+    },
+    "resultado_esperado": {
+      "registro_creado": "Observaciones",
+      "valor": 1
+    }
+  },
+  {
+    "id": "TC-RF-07a",
+    "titulo": "Umbral Descarga Parcial (206)",
+    "configuracion_entrada": {
+      "status": 206,
+      "bytes_sum": 1048576
+    },
+    "resultado_esperado": {
+      "download_valid": true
+    }
+  },
+  {
+    "id": "TC-RF-07b",
+    "titulo": "Umbral Descarga Completa (200)",
+    "configuracion_entrada": {
+      "status": 200,
+      "bytes_sum": 31457280
+    },
+    "resultado_esperado": {
+      "download_valid": true
+    }
+  },
+  {
+    "id": "TC-RF-08",
+    "titulo": "Cálculo de Estadísticas Globales",
+    "configuracion_entrada": {
+      "dataset": "data_toy.csv"
+    },
+    "resultado_esperado": {
+      "total_downloads": 19,
+      "total_errors": "calculated_value"
+    }
+  },
+  {
+    "id": "TC-RF-09",
+    "titulo": "Ranking Top K",
+    "configuracion_entrada": {
+      "K": 3
+    },
+    "resultado_esperado": {
+      "list_length": 3,
+      "order": "descending"
+    }
+  },
+  {
+    "id": "TC-RF-10",
+    "titulo": "Generación de Visualización",
+    "configuracion_entrada": {
+      "data": "top_k_list"
+    },
+    "resultado_esperado": {
+      "format": "PNG/Buffer",
+      "status": "ready"
+    }
+  },
+  {
+    "id": "TC-RF-11",
+    "titulo": "Lógica de Recomendación",
+    "configuracion_entrada": {
+      "user_history_topic": "Tech"
+    },
+    "resultado_esperado": {
+      "recommendations_count": 5,
+      "topic_match": "Tech"
+    }
+  },
+  {
+    "id": "TC-RFN-01",
+    "titulo": "Disponibilidad de API OpenAPI",
+    "configuracion_entrada": {
+      "endpoint": "/docs"
+    },
+    "resultado_esperado": {
+      "http_status": 200,
+      "content_type": "text/html"
+    }
+  },
+  {
+    "id": "TC-RFN-02",
+    "titulo": "Seguridad de Endpoints",
+    "configuracion_entrada": {
+      "endpoint": "/api/metrics",
+      "header": "None"
+    },
+    "resultado_esperado": {
+      "http_status": 401,
+      "error": "Unauthorized"
+    }
+  }
+]
