@@ -1,0 +1,11 @@
+# Entorno virtual
+venv/
+ENV/
+env/
+
+# Documentación generada
+site/
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
